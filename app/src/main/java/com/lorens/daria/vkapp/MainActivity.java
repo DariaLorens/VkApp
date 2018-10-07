@@ -3,6 +3,7 @@ package com.lorens.daria.vkapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String TAG = MainActivity.class.getSimpleName();
     private String[] scope = new String[]{VKScope.FRIENDS, VKScope.MESSAGES, VKScope.WALL};
     private ListView listView;
     private Button showMessage;
@@ -32,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(R.id.listView);
-
+//
+//        String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
+//        Log.d(TAG, "onCreate: " + Arrays.toString(fingerprints));
         VKSdk.login(this, scope);
 
         showMessage = (Button) findViewById(R.id.showMessage);
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                             messages.add(msg.message.body);
                         }
 
-                        listView.setAdapter(new CustomAdapter(MainActivity.this, users, messages, list));
+                        listView.setAdapter(new CustomAdapter(MainActivity.this, users, messages, list,0));
                     }
                 });
             }
